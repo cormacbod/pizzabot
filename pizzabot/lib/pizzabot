@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require_relative 'pizza_delivery_instructions'
+require 'logger'
+
+
+@logger = Logger.new File.new('./log/pizzabot.log', 'w')
+
+# PizzaDelivery provides logic for parsing input and returning delivery instructions
+@delivery_instructions = PizzaDeliveryInstructions.new
+
+# Copy command line arguments into an array and then convert to string
+input_array = ARGV
+pizza_delivery_input = input_array.to_s
+
+# Remove bracket and quotation prefix and suffix from input
+pizza_delivery_input.gsub!(/(\[")/, '')
+pizza_delivery_input.gsub!(/("\])/, '')
+
+@logger.info "User input is #{pizza_delivery_input}"
+
+# Ask pizza delivery object to return the delivery instructions and print them out
+delivery_route = @delivery_instructions.get_delivery_instructions(pizza_delivery_input)
+puts delivery_route
+
+
